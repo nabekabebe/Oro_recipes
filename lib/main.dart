@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:oro_recipes/pages/login_page.dart';
-import 'package:oro_recipes/constants.dart';
+import 'package:oro_recipes/pages/HomePage.dart';
+
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -10,25 +11,19 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Recipe App',
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: Home(),
     );
   }
 }
 
-class HomePage extends StatefulWidget {
+class Home extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomeState createState() => _HomeState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomPadding: true,
-        backgroundColor: scafold_background,
-        body: LoginPage(),
-      ),
-    );
+    return HomePage();
   }
 }
