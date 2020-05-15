@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oro_recipes/customWidgets/searchBar.dart';
+import 'package:oro_recipes/pages/DetailsPage.dart';
 import '../constants.dart';
 
 import '../data.dart';
@@ -11,6 +12,8 @@ class FavoritesPage extends StatefulWidget {
 }
 
 class _FavoritesPageState extends State<FavoritesPage> {
+
+  List<int> favorites = [3,4,5,6,7,8,9];
 
   @override
   Widget build(BuildContext context) {
@@ -66,40 +69,40 @@ class _FavoritesPageState extends State<FavoritesPage> {
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 14),
                       child: ListView.builder(
-                          itemCount: 20,
+                          itemCount: favorites.length,
                           itemBuilder: (context,index){
-                            if(index>6){
-                              index=0;
-                            }
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 8),
-                          child: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
-                              color: Colors.white,
-                            ),
-
-                            child: ListTile(
-                              trailing: GestureDetector(
-                                  onTap: (){},
-                                  child: Icon(Icons.remove_circle,color: Colors.red,)),
-                              onTap: (){},
-                              leading: CircleAvatar(
-                                radius: 30,
-                                backgroundColor: Colors.teal,
-                                child: Image.asset(dummyDataJason[index]["image"],width: 30,),
-                              ),
-                              title: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(dummyDataJason[index]["name"],style: displayTextStyle),
-                                  Text(dummyDataJason[index]["Region"],style: inputHintStyle,),
-                                  SizedBox(height: 6,)
-                                ],
-                              ),
-                              subtitle: Text(dummyDataJason[index]["Description"]),
-                            ),
+                            var position=favorites[index];
+                        return ListTile(
+                          onTap: (){
+                            Navigator.push(context,MaterialPageRoute(
+                                builder: (BuildContext context){
+                                  return DetailPage(itemIndex: index,);
+                                }
+                            ));
+                          },
+                          leading: CircleAvatar(
+                            radius: 30,
+                            backgroundColor: Colors.teal,
+                            child: Image.asset(dummyDataJason[position]["image"],width: 30,),
+                          ),
+                          title: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(dummyDataJason[position]["name"],style: displayTextStyle),
+                              Text(dummyDataJason[position]["Region"],style: inputHintStyle,),
+                              SizedBox(height: 6,)
+                            ],
+                          ),
+                          subtitle: Text(dummyDataJason[position]["Description"],style: smallText,),
+                          trailing: IconButton(
+                            onPressed:(){
+                             setState(() {
+                               favorites.removeAt(index);
+                             });
+                            },
+                            icon: Container(
+                                alignment:Alignment.center,
+                              child: Icon(Icons.remove_circle,color: Colors.red,)),
                           ),
                         );
                       }),

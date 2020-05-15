@@ -27,7 +27,6 @@ class _HomePageState extends State<HomePage>{
   StreamManager _streamManager = new StreamManager();
 
 
-
   @override
   void initState() {
     super.initState();
@@ -38,9 +37,6 @@ class _HomePageState extends State<HomePage>{
   }
 
 
-
-
-
   @override
   void dispose() {
     _pageController.dispose();
@@ -49,9 +45,7 @@ class _HomePageState extends State<HomePage>{
   }
 
 
-
-
-    @override
+  @override
   Widget build(BuildContext context){
     return SafeArea(
       child: Scaffold(
