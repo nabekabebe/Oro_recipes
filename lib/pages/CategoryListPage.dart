@@ -56,7 +56,7 @@ class _RegionalRecipeListState extends State<RegionalRecipeList> with SingleTick
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0xFFf7f4ea),
+        backgroundColor: scaffold_background,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

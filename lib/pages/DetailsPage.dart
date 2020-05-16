@@ -15,8 +15,8 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> with SingleTickerProviderStateMixin {
 
-  FavouritesCollection _favouritesCollection = new FavouritesCollection();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  FavCollection _favCollection = new FavCollection();
 
 
   int itemSelected;
@@ -168,8 +168,10 @@ class _DetailPageState extends State<DetailPage> with SingleTickerProviderStateM
                       ),
                   GestureDetector(
                     onTap: (){
-                      _favouritesCollection.favorites.add(itemSelected);
-                      _initSnackBar("Item added to favourites!");
+                      setState(() {
+                        _favCollection.favSet(itemSelected);
+                        _initSnackBar("Item added to favourites!");
+                      });
                     },
                     child: Container(
                       padding: EdgeInsets.all(5),

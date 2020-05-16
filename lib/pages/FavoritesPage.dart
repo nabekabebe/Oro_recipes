@@ -10,8 +10,14 @@ class FavoritesPage extends StatefulWidget {
 }
 
 class _FavoritesPageState extends State<FavoritesPage> {
+  FavCollection _collection;
 
-  FavouritesCollection _favouritesCollection = new FavouritesCollection();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _collection = new FavCollection();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,39 +70,42 @@ class _FavoritesPageState extends State<FavoritesPage> {
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 14),
                   child: ListView.builder(
-                      itemCount: _favouritesCollection.favorites.length,
+                      itemCount: _collection.itemGet(),
                       itemBuilder: (context,index){
-                        var position=_favouritesCollection.favorites[index];
-                    return ListTile(
-                      onTap: (){
-                        Navigator.push(context,MaterialPageRoute(
-                            builder: (BuildContext context){
-                              return DetailPage(itemIndex: index,);
-                            }
-                        ));
-                      },
-                      leading: CircleAvatar(
-                        backgroundImage: AssetImage(dummyDataJason[position]["image"]),
-                        radius: 30,
-                      ),
-                      title: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(dummyDataJason[position]["name"],style: displayTextStyle),
-                          Text(dummyDataJason[position]["Region"],style: inputHintStyle,),
-                          SizedBox(height: 6,)
-                        ],
-                      ),
-                      subtitle: Text(dummyDataJason[position]["Description"],style: smallText,),
-                      trailing: IconButton(
-                        onPressed:(){
-                         setState(() {
-                           _favouritesCollection.favorites.removeAt(index);
-                         });
+                        var position=_collection.favGet()[index];
+                    return Card(
+                      elevation: 2,
+                      child: ListTile(
+                        onTap: (){
+                          Navigator.push(context,MaterialPageRoute(
+                              builder: (BuildContext context){
+                                return DetailPage(itemIndex: position,);
+                              }
+                          ));
                         },
-                        icon: Container(
-                            alignment:Alignment.center,
-                          child: Icon(Icons.remove_circle,color: Colors.red,)),
+                        leading: CircleAvatar(
+                          backgroundImage: AssetImage(dummyDataJason[position]["image"]),
+                          radius: 30,
+                        ),
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(dummyDataJason[position]["name"],style: displayTextStyle),
+                            Text(dummyDataJason[position]["Region"],style: inputHintStyle,),
+                            SizedBox(height: 6,)
+                          ],
+                        ),
+                        subtitle: Text(dummyDataJason[position]["Description"],style: smallText,),
+                        trailing: IconButton(
+                          onPressed:(){
+                           setState(() {
+                              _collection.favRemove(index);
+                           });
+                          },
+                          icon: Container(
+                              alignment:Alignment.center,
+                            child: Icon(Icons.remove_circle,color: Colors.red,)),
+                        ),
                       ),
                     );
                   }),
