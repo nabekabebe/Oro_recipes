@@ -1,43 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-
-class CustomCardSmall extends StatelessWidget {
-  final bool isCircle;
-  final String imgUrl;
-
-  CustomCardSmall({this.imgUrl, this.isCircle});
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      child: Image.asset(
-        imgUrl,
-        height: 60,
-        width: 60,
-      ),
-    );
-  }
-}
-
-
-
+import 'package:oro_recipes/constants.dart';
 
 class CustomCardSmallView extends StatelessWidget {
-  final bool isCircle;
-  final String imgUrl;
 
-  CustomCardSmallView({this.imgUrl, this.isCircle});
+  final String imgUrl;
+  final double height;
+  final double width;
+
+  CustomCardSmallView({this.imgUrl,this.width,this.height});
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 140,
-      width: 180,
+      height: height,
+      width: width,
       decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage(imgUrl),fit: BoxFit.cover
           ),
-          color: Colors.teal,
+          color: Colors.grey,
           borderRadius: BorderRadius.all(Radius.circular(20)),
           boxShadow: [
             BoxShadow(
@@ -50,8 +32,6 @@ class CustomCardSmallView extends StatelessWidget {
     );
   }
 }
-
-
 
 
 
@@ -69,11 +49,11 @@ class CustomCardBig extends StatelessWidget {
       children: <Widget>[
         Container(
           padding: EdgeInsets.only(top: 50),
-          alignment: Alignment.topCenter,
+          alignment: Alignment.center,
           width: 180,
           height: 260,
           decoration: BoxDecoration(
-              color: Color(0xFFf4c989),
+              color: Color(0xFFf5deb3),
               borderRadius: BorderRadius.all(Radius.circular(30)),
           boxShadow:[
               BoxShadow(
@@ -82,54 +62,65 @@ class CustomCardBig extends StatelessWidget {
               offset: Offset(1,2)
           ),
         ]),
-          child: Image.asset(
-            imgUrl,
-            height: 80,
-            width: 80,
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(30)),
+                boxShadow:[
+                  BoxShadow(
+                      blurRadius: 25,
+                      color: Color(0xFFff9f82),
+                  ),
+                ]),
+            child: CircleAvatar(
+              backgroundImage: AssetImage(imgUrl),
+              radius: 50,
+            ),
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.all(15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(name,style:displayTextStyle),
+              Text(region,style:TextStyle(fontSize: 12)),
+            ],
           ),
         ),
         Positioned(
           bottom: 50,
           left: 10,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(name,style:TextStyle(fontWeight: FontWeight.bold,fontSize: 20)),
-              Text(region,style:TextStyle(fontSize: 12)),
-              SizedBox(height: 10,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(30)
+              Container(
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(30)
 
-                      ),
-                    ),
-                    child: RatingBar(
-                      itemSize: 16,
-                      initialRating: double.parse(ratingBar),
-                      ignoreGestures: false,
-                      direction: Axis.horizontal,
-                      unratedColor: Colors.grey,
-                      allowHalfRating: true,
-                      itemCount: 5,
-                      itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                      itemBuilder: (context, _) => Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                      ),
-                      onRatingUpdate: (rating) {
-                        print(rating);
-                      },
-                    ),
                   ),
-                  SizedBox(width: 20,),
-                  Icon(Icons.add_box)
-                ],
+                ),
+                child: RatingBar(
+                  itemSize: 16,
+                  initialRating: double.parse(ratingBar),
+                  ignoreGestures: false,
+                  direction: Axis.horizontal,
+                  unratedColor: Colors.grey,
+                  allowHalfRating: true,
+                  itemCount: 5,
+                  itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                  itemBuilder: (context, _) => Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  onRatingUpdate: (rating) {
+                    print(rating);
+                  },
+                ),
               ),
+              SizedBox(width: 20,),
+              Icon(Icons.add_box)
             ],
           ),
         ),
@@ -144,6 +135,7 @@ class CustomCardPageView extends StatelessWidget {
   final String name;
   final String ratingBar;
   final String region;
+
 
   CustomCardPageView({this.imgUrl, this.name, this.ratingBar,this.region});
   @override

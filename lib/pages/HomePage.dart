@@ -24,7 +24,6 @@ class _HomePageState extends State<HomePage>{
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   PageController _pageController;
   PageController _pageController2;
-  StreamManager _streamManager = new StreamManager();
 
 
   @override
@@ -155,43 +154,33 @@ class _HomePageState extends State<HomePage>{
               ),
               Expanded(
                 flex: 1,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 1,
-                      child: PageView.builder(
-                          controller: _pageController,
-                          itemCount: 6,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.only(left: 15),
-                              child: GestureDetector(
-                                onTap: (){
-                                  Navigator.push(context,MaterialPageRoute(
-                                      builder: (BuildContext context){
-                                        return RegionalRecipeList(scrollIndex: index);
-                                      }
-                                  ));
-                                },
-                                child: Column(
-                                  children: <Widget>[
-                                    CustomCardSmall(
-                                      isCircle: false,
-                                      imgUrl: dummyDataJason[index]["image"],
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(dummyDataJason[index]["Region"]),
-                                  ],
-                                ),
-                              ),
-                            );
-                          }),
-                    ),
-                  ],
-                ),
+                child: PageView.builder(
+                    controller: _pageController,
+                    itemCount: dummyDataJason.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: (){
+                          Navigator.push(context,MaterialPageRoute(
+                              builder: (BuildContext context){
+                                return RegionalRecipeList(scrollIndex: index);
+                              }
+                          ));
+                        },
+                        child: Column(
+                          children: <Widget>[
+                            CustomCardSmallView(
+                              height: 75,
+                              width: 75,
+                              imgUrl: dummyDataJason[index]["image"],
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(dummyDataJason[index]["Region"]),
+                          ],
+                        ),
+                      );
+                    }),
               ),
               Expanded(
                 flex: 3,
@@ -206,33 +195,26 @@ class _HomePageState extends State<HomePage>{
                       ),
                     ),
                     Expanded(
-                      child: StreamBuilder<List<List>>(
-                        stream: _streamManager.allList,
-                        builder: (context,snapshot){
-                          List<List> rr=snapshot.data;
-                          print(rr);
-                          return PageView.builder(
-                              controller: _pageController2,
-                              itemCount: 0,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: (){
-                                    Navigator.push(context,MaterialPageRoute(
-                                        builder: (BuildContext context){
-                                          return DetailPage(itemIndex: index,);
-                                        }
-                                    ));
-                                  },
-                                  child: CustomCardBig(
-                                    ratingBar: dummyDataJason[0]["Rating"],
-                                    imgUrl: dummyDataJason[0]["image"],
-                                    name: dummyDataJason[0]["name"],
-                                    region: dummyDataJason[0]["Region"],
-                                  ),
-                                );
-                              });
-                        },
-                      ),
+                      child:PageView.builder(
+                          controller: _pageController2,
+                          itemCount: 12,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: (){
+                                Navigator.push(context,MaterialPageRoute(
+                                    builder: (BuildContext context){
+                                      return DetailPage(itemIndex: index,);
+                                    }
+                                ));
+                              },
+                              child: CustomCardBig(
+                                ratingBar: dummyDataJason[index]["Rating"],
+                                imgUrl: dummyDataJason[index]["image"],
+                                name: dummyDataJason[index]["name"],
+                                region: dummyDataJason[index]["Region"],
+                              ),
+                            );
+                          }),
                     ),
                   ],
                 ),

@@ -82,7 +82,7 @@ class _RegionalRecipeListState extends State<RegionalRecipeList> with SingleTick
                         },
                         child: CustomCardPageView(
                           ratingBar: dummyDataJason[index]["Rating"],
-                          imgUrl: foodImageList[index],
+                          imgUrl: dummyDataJason[index]["image"],
                           name: dummyDataJason[index]["name"],
                           region: dummyDataJason[index]["Region"],
                         ),
@@ -113,8 +113,9 @@ class _RegionalRecipeListState extends State<RegionalRecipeList> with SingleTick
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           CustomCardSmallView(
-                            isCircle: false,
-                            imgUrl: foodImageList[index],
+                            height: 140,
+                            width: 180,
+                            imgUrl: dummyDataJason[index]["image"],
                           ),
                           SizedBox(
                             height: 5,

@@ -1,31 +1,10 @@
-
-
-const foodImageList=[
-
-  "images/food1.jpeg",
-  "images/food2.jpeg",
-  "images/food3.jpeg",
-  "images/food4.jpeg",
-  "images/food5.jpeg",
-  "images/food6.jpeg",
-  "images/food7.jpeg",
-  "images/food8.webp",
-  "images/food9.webp",
-  "images/food10.webp",
-  "images/food11.webp",
-  "images/food12.webp",
-
-];
-
-
-
 const dummyDataJason = {
   0: {
     "name":"Chuko",
     "Region":"Arsi",
     "Rating":"4",
     "Description":"Messages on this channel are being discarded or you need to adjust the buffer size if of the channel.",
-    "image":"images/junk-food.png",
+    "image":"images/food1.jpeg",
     "Likes":"2.3k",
     "DisLike":"44",
     "steps": [
@@ -67,7 +46,7 @@ const dummyDataJason = {
     "Region":"Harar",
     "Rating":"3.5",
     "Description":"The goal of a JSON generator is to create a representative data to be useful.",
-    "image":"images/sandwich.png",
+    "image":"images/food2.jpeg",
     "Likes":"4k",
     "DisLike":"4",
     "steps": [
@@ -105,7 +84,7 @@ const dummyDataJason = {
     "Region":"Wallaga",
     "Rating":"5",
     "Description":"perhaps, the service  want to send real data to anyone who isn’t authorized to receive it.",
-    "image":"images/kitchen-pack.png",
+    "image": "images/food3.jpeg",
     "Likes":"22k",
     "DisLike":"400",
     "steps": [
@@ -148,7 +127,7 @@ const dummyDataJason = {
     "Region":"Borana",
     "Rating":"2",
     "Description":"Saving manual work is the first place? You may be designing an API and not have live data yet.",
-    "image":"images/legs.png",
+    "image": "images/food4.jpeg",
     "Likes":"9k",
     "DisLike":"99",
     "steps": [
@@ -208,7 +187,7 @@ const dummyDataJason = {
     "Region":"Arsi",
     "Rating":"4",
     "Description":"Messages on this channel be running or you need to adjust the buffer size if of the channel.",
-    "image":"images/junk-food.png",
+    "image":"images/food5.jpeg",
     "Likes":"2k",
     "DisLike":"33",
     "steps": [
@@ -259,7 +238,7 @@ const dummyDataJason = {
     "Region":"Harar",
     "Rating":"3.5",
     "Description":"The goal of a JSON generator is to create sample that appears real enough to be useful.",
-    "image":"images/sandwich.png",
+    "image":"images/food6.jpeg",
     "Likes":"24",
     "DisLike":"600",
     "steps": [
@@ -301,7 +280,7 @@ const dummyDataJason = {
     "Region":"Wallaga",
     "Rating":"5",
     "Description":"perhaps, the service is live and returning to send real data to anyone who isn’t authorized to receive it.",
-    "image":"images/kitchen-pack.png",
+    "image":"images/food7.jpeg",
     "Likes":"2M",
     "DisLike":"4k",
     "steps": [
@@ -373,7 +352,7 @@ const dummyDataJason = {
     "Region":"Borana",
     "Rating":"2",
     "Description":"Saving manual work is a great reason to You may be designing an API and not have live data yet.",
-    "image":"images/legs.png",
+    "image":"images/food8.webp",
     "Likes":"2k",
     "DisLike":"4",
     "steps": [
@@ -456,7 +435,7 @@ const dummyDataJason = {
     "Region":"Wallaga",
     "Rating":"5",
     "Description":"perhaps, the service  want to send real data to anyone who isn’t authorized to receive it.",
-    "image":"images/kitchen-pack.png",
+    "image":"images/food9.webp",
     "Likes":"2.2k",
     "DisLike":"90",
     "steps": [
@@ -537,7 +516,7 @@ const dummyDataJason = {
     "Region":"Borana",
     "Rating":"2",
     "Description":"Saving manual work is the first place? You may be designing an API and not have live data yet.",
-    "image":"images/legs.png",
+    "image":"images/food10.webp",
     "Likes":"6k",
     "DisLike":"22",
     "steps": [
@@ -619,7 +598,7 @@ const dummyDataJason = {
     "Region":"Arsi",
     "Rating":"4",
     "Description":"Messages on this channel be running or you need to adjust the buffer size if of the channel.",
-    "image":"images/junk-food.png",
+    "image":"images/food11.webp",
     "Likes":"21",
     "DisLike":"11",
     "steps": [
@@ -667,7 +646,7 @@ const dummyDataJason = {
     "Region":"Harar",
     "Rating":"3.5",
     "Description":"The goal of a JSON generator is to create sample that appears real enough to be useful.",
-    "image":"images/sandwich.png",
+    "image":"images/food12.webp",
     "Likes":"200",
     "DisLike":"100",
     "steps": [
@@ -719,7 +698,7 @@ const dummyDataJason = {
     "Region":"Wallaga",
     "Rating":"5",
     "Description":"perhaps, the service is live and returning to send real data to anyone who isn’t authorized to receive it.",
-    "image":"images/kitchen-pack.png",
+    "image":"images/food3.jpeg",
     "Likes":"1k",
     "DisLike":"2",
     "steps": [
@@ -798,25 +777,16 @@ const dummyDataJason = {
 };
 
 
+class FavouritesCollection{
 
+  List<int> favorites = [3,6];
 
-
-class StreamManager{
-
-  List<List> rate=[[]];
-  List<List> c=[];
-
-  Stream<List<List>> get allList async*{
-    for (int i;i<= 3;i++){
-      rate.add([5,i]);
-      rate.sort();
-      yield rate.sublist(0,i);
-    }
-
-
+  setFav(int index){
+    favorites.add(index);
   }
 
 }
+
 
 
 

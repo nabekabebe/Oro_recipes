@@ -15,11 +15,14 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> with SingleTickerProviderStateMixin {
 
+  FavouritesCollection _favouritesCollection = new FavouritesCollection();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+
   int itemSelected;
   bool isLiked = false;
   PageController _pageController;
   TabController _tabController;
-  List hh;
 
   @override
   void initState() {
@@ -37,6 +40,11 @@ class _DetailPageState extends State<DetailPage> with SingleTickerProviderStateM
     super.dispose();
   }
 
+  _initSnackBar(String msg) {
+    _scaffoldKey.currentState
+        .showSnackBar(new SnackBar(content: new Text(msg)));
+  }
+
   _likeAction() {
     setState(() {
       isLiked = !isLiked;
@@ -47,9 +55,9 @@ class _DetailPageState extends State<DetailPage> with SingleTickerProviderStateM
   Widget build(BuildContext context) {
 
     MediaQuerySize md = MediaQuerySize(context: context);
-    hh=dummyDataJason[itemSelected]["steps"];
     return SafeArea(
       child: Scaffold(
+        key: _scaffoldKey,
         backgroundColor: scaffold_background,
         body: CustomScrollView(
           slivers: <Widget>[
@@ -86,7 +94,7 @@ class _DetailPageState extends State<DetailPage> with SingleTickerProviderStateM
               ),
               expandedHeight: md.getHeight()/2-70,
               flexibleSpace: FlexibleSpaceBar(
-                background: Image.asset(foodImageList[itemSelected],fit: BoxFit.cover,)
+                background: Image.asset(dummyDataJason[itemSelected]["image"],fit: BoxFit.cover,)
               ),
             ),
             SliverList(
@@ -160,7 +168,8 @@ class _DetailPageState extends State<DetailPage> with SingleTickerProviderStateM
                       ),
                   GestureDetector(
                     onTap: (){
-
+                      _favouritesCollection.favorites.add(itemSelected);
+                      _initSnackBar("Item added to favourites!");
                     },
                     child: Container(
                       padding: EdgeInsets.all(5),
@@ -177,16 +186,21 @@ class _DetailPageState extends State<DetailPage> with SingleTickerProviderStateM
                 ),
                 Container(
                   color: scaffold_background,
-                  height: 90,
+                  height: 100,
                   child: PageView.builder(
                       controller: _pageController,
                       itemCount: 5,
                       itemBuilder: (context, index) {
                         List ingredientsList=dummyDataJason[itemSelected]["ingredients"];
-                        return ListTile(dense: true,
-                          leading: Image.asset(foodImageList[index],height: 60,width: 60,),
-                          title: Text(ingredientsList[index]["name"],style: displayTextStyle,),
-                          subtitle: Text("Amount: "+ingredientsList[index]["quantity"],style: smallText,),
+                        return Card(
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              backgroundImage: AssetImage(dummyDataJason[index]["image"]),
+                              radius: 30,
+                            ),
+                            title: Text(ingredientsList[index]["name"],style: displayTextStyle,),
+                            subtitle: Text("Amount: "+ingredientsList[index]["quantity"],style: smallText,),
+                          ),
                         );
                       }),
                 ),
@@ -203,7 +217,7 @@ class _DetailPageState extends State<DetailPage> with SingleTickerProviderStateM
               ]),
             ),
             SliverList(
-                delegate: SliverChildListDelegate(List.generate(hh.length, (index) {
+                delegate: SliverChildListDelegate(List.generate(2, (index) {
                   List<String> one = dummyDataJason[itemSelected]["steps"];
               return Padding(
                 padding: const EdgeInsets.only(left: 8.0, right: 8.0),
