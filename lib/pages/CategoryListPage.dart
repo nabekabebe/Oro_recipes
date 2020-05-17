@@ -5,9 +5,8 @@ import 'package:oro_recipes/constants.dart';
 import 'package:oro_recipes/customWidgets/displayCard.dart';
 import 'package:oro_recipes/data.dart';
 import 'package:oro_recipes/pages/DetailsPage.dart';
-import 'package:oro_recipes/pages/FavoritesPage.dart';
-import 'package:oro_recipes/pages/HomePage.dart';
-
+import 'package:oro_recipes/state.dart';
+import 'package:provider/provider.dart';
 
 class RegionalRecipeList extends StatefulWidget {
 
@@ -53,10 +52,42 @@ class _RegionalRecipeListState extends State<RegionalRecipeList> with SingleTick
 
   @override
   Widget build(BuildContext context) {
-
+    var _state = Provider.of<SettingsState>(context);
     return SafeArea(
       child: Scaffold(
-        backgroundColor: scaffold_background,
+        bottomNavigationBar: CurvedNavigationBar(
+          height: 54,
+          color: Colors.black,
+          backgroundColor: !_state.nightMode?navIndicatorLight:navIndicatorDark,
+          buttonBackgroundColor: Colors.red,
+          animationDuration: Duration(milliseconds: 100),
+          index: 2,
+          onTap: (index){
+            Navigator.push(context,MaterialPageRoute(
+                builder: (BuildContext context){
+                  return pages[index];
+                }
+            ));
+          },
+          items: <Widget>[
+            Icon(
+              Icons.favorite,
+              color: Colors.white,
+              size: 26,
+            ),
+            Icon(
+              Icons.home,
+              color: Colors.white,
+              size: 26,
+            ),
+            Icon(
+              Icons.category,
+              color: Colors.white,
+              size: 26,
+            ),
+          ],
+          animationCurve: Curves.easeInCirc,
+        ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -76,7 +107,7 @@ class _RegionalRecipeListState extends State<RegionalRecipeList> with SingleTick
                         onTap: (){
                           Navigator.push(context,MaterialPageRoute(
                               builder: (BuildContext context){
-                                return DetailPage(itemIndex: index,);
+                                return DetailPage(itemIndex: index,offline: false,);
                               }
                           ));
                         },
@@ -120,58 +151,12 @@ class _RegionalRecipeListState extends State<RegionalRecipeList> with SingleTick
                           SizedBox(
                             height: 5,
                           ),
-                          Text(dummyDataJason[index]["Region"]),
+                          Text(dummyDataJason[index]["Region"],),
                         ],
                       ),
                     );
                   }),
             ),
-            Container(
-              padding: EdgeInsets.only(top: 30),
-              child: CurvedNavigationBar(
-                height: 58,
-                color: Color(0xFF0B8457),
-                backgroundColor: scaffold_background,
-                buttonBackgroundColor: Colors.red,
-                animationDuration: Duration(milliseconds: 150),
-                items: <Widget>[
-                  Icon(
-                    Icons.category,
-                    color: Colors.white,
-                    size: 26,
-                  ),
-                  GestureDetector(
-                    onTap: (){
-                      Navigator.push(context,MaterialPageRoute(
-                          builder: (BuildContext context){
-                            return HomePage();
-                          }
-                      ));
-                    },
-                    child: Icon(
-                      Icons.home,
-                      color: Colors.white,
-                      size: 26,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: (){
-                      Navigator.push(context,MaterialPageRoute(
-                          builder: (BuildContext context){
-                            return FavoritesPage();
-                          }
-                      ));
-                    },
-                    child: Icon(
-                      Icons.favorite,
-                      color: Colors.white,
-                      size: 26,
-                    ),
-                  ),
-                ],
-                index: 1,
-              ),
-            )
           ],
         ),
       ),

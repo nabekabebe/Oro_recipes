@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:oro_recipes/constants.dart';
 import 'package:oro_recipes/data.dart';
+import 'package:provider/provider.dart';
+import '../state.dart';
 
 class DetailPage extends StatefulWidget {
 
   final int itemIndex;
-  DetailPage({this.itemIndex});
+  final bool offline;
+  DetailPage({this.itemIndex,this.offline});
 
   @override
   _DetailPageState createState() => _DetailPageState();
@@ -23,11 +26,13 @@ class _DetailPageState extends State<DetailPage> with SingleTickerProviderStateM
   bool isLiked = false;
   PageController _pageController;
   TabController _tabController;
+  List<String> one=[];
 
   @override
   void initState() {
     // TODO: implement initState
     itemSelected=widget.itemIndex;
+    one = dummyDataJason[itemSelected]["steps"];
     _tabController=TabController(length: 1,vsync: this);
     _pageController = PageController(initialPage: 0, viewportFraction: 0.6);
     super.initState();
@@ -45,53 +50,26 @@ class _DetailPageState extends State<DetailPage> with SingleTickerProviderStateM
         .showSnackBar(new SnackBar(content: new Text(msg)));
   }
 
-  _likeAction() {
-    setState(() {
-      isLiked = !isLiked;
-    });
-  }
+
+  Color saved=Colors.grey;
+
 
   @override
   Widget build(BuildContext context) {
+
+    var _offlineState = Provider.of<SettingsState>(context);
 
     MediaQuerySize md = MediaQuerySize(context: context);
     return SafeArea(
       child: Scaffold(
         key: _scaffoldKey,
-        backgroundColor: scaffold_background,
         body: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
               backgroundColor: Colors.black,
-              leading: IconButton(
-                  icon: Icon(Icons.arrow_back_ios),
-                onPressed: (){
-                    Navigator.pop(context);
-                },
-              ),
               elevation: 5.0,
               centerTitle: true,
               floating: true,
-              bottom: TabBar(
-                indicatorColor: Colors.transparent,
-                controller: _tabController,
-                tabs: <Widget>[
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: (){
-                        _likeAction();
-                      },
-                      child: Icon(
-                        Icons.favorite,
-                        color: isLiked?Colors.pink:Colors.grey,
-                        size: 30,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
               expandedHeight: md.getHeight()/2-70,
               flexibleSpace: FlexibleSpaceBar(
                 background: Image.asset(dummyDataJason[itemSelected]["image"],fit: BoxFit.cover,)
@@ -110,7 +88,7 @@ class _DetailPageState extends State<DetailPage> with SingleTickerProviderStateM
                           Text(dummyDataJason[itemSelected]["name"], style: heading2StyleBold,),
                           SizedBox(height: 3,),
                           Row(
-                            children: <Widget>[
+                            children: [
                               RatingBar(
                                 itemSize: 14,
                                 initialRating: double.parse(dummyDataJason[itemSelected]["Rating"]),
@@ -129,79 +107,53 @@ class _DetailPageState extends State<DetailPage> with SingleTickerProviderStateM
                                 },
                               ),
                               SizedBox(width: 5,),
-                              Text("("+dummyDataJason[itemSelected]["Rating"]+" rating)",style: smallText,)
+                              Text("("+dummyDataJason[itemSelected]["Rating"]+" rating)",style: smallText,),
                             ],
                           ),
                         ],
                       ),
-                      Column(
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Text(dummyDataJason[itemSelected]["Likes"],style: TextStyle(fontSize: 12),),
-                              SizedBox(width: 15,),
-                              Text(dummyDataJason[itemSelected]["DisLike"],style: TextStyle(fontSize: 12),),
-
-                            ],
+                      GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            _favCollection.favSet(itemSelected);
+                            _initSnackBar("Item added to favourites!");
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.pinkAccent,
+                            borderRadius: BorderRadius.all(Radius.circular(30)
+                            ),
                           ),
-                          SizedBox(height: 3,),
-                          Row(
-                            children: <Widget>[
-                              Icon(Icons.thumb_up,color: Colors.grey,size: 15,),
-                              SizedBox(width: 20,),
-                              Icon(Icons.thumb_down,color: Colors.grey,size: 15,)
-                            ],
-                          ),
-                        ],
+                          child: Text("Add to Fav",style: TextStyle(fontSize: 10,color: Colors.white),),
+                        ),
                       ),
                     ],
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15,vertical: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        "Ingredients",
-                        style: displayTextStyle,
-                      ),
-                  GestureDetector(
-                    onTap: (){
-                      setState(() {
-                        _favCollection.favSet(itemSelected);
-                        _initSnackBar("Item added to favourites!");
-                      });
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        color: Colors.pinkAccent,
-                        borderRadius: BorderRadius.all(Radius.circular(30)
-                        ),
-                      ),
-                      child: Text("Add to Fav",style: TextStyle(fontSize: 10,color: Colors.white),),
-                    ),
-                  ),
-                    ],
+                  child: Text(
+                    "Ingredients",
                   ),
                 ),
                 Container(
-                  color: scaffold_background,
                   height: 100,
                   child: PageView.builder(
                       controller: _pageController,
-                      itemCount: 5,
+                      itemCount: 3,
                       itemBuilder: (context, index) {
                         List ingredientsList=dummyDataJason[itemSelected]["ingredients"];
                         return Card(
                           child: ListTile(
+                            contentPadding: EdgeInsets.only(top: 5,left: 10),
                             leading: CircleAvatar(
                               backgroundImage: AssetImage(dummyDataJason[index]["image"]),
                               radius: 30,
                             ),
-                            title: Text(ingredientsList[index]["name"],style: displayTextStyle,),
-                            subtitle: Text("Amount: "+ingredientsList[index]["quantity"],style: smallText,),
+                            title: Text(ingredientsList[index]["name"]),
+                            subtitle: Text("Amount: "+ingredientsList[index]["quantity"]),
                           ),
                         );
                       }),
@@ -219,8 +171,7 @@ class _DetailPageState extends State<DetailPage> with SingleTickerProviderStateM
               ]),
             ),
             SliverList(
-                delegate: SliverChildListDelegate(List.generate(2, (index) {
-                  List<String> one = dummyDataJason[itemSelected]["steps"];
+                delegate: SliverChildListDelegate(List.generate(one.length, (index) {
               return Padding(
                 padding: const EdgeInsets.only(left: 8.0, right: 8.0),
                 child: Card(

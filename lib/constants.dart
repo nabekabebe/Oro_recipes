@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:oro_recipes/pages/CategoryListPage.dart';
+import 'package:oro_recipes/pages/FavoritesPage.dart';
+import 'package:oro_recipes/pages/HomePage.dart';
 
 const inputHintStyle = TextStyle(fontSize: 11);
 const scaffold_background = Colors.white;
@@ -15,7 +18,6 @@ const headingStyle = TextStyle(
 );
 
 const smallText=TextStyle(
-  color: Colors.black45,
   fontSize: 13,
 );
 
@@ -30,26 +32,32 @@ const heading2StyleBold = TextStyle(
 );
 
 const displayTextStyle = TextStyle(
-  color: Colors.black,
   fontWeight: FontWeight.bold,
   fontSize: 16,
 );
 
 const displayTextWhiteBold = TextStyle(
-  color: Colors.white,
   fontWeight: FontWeight.bold,
   fontSize: 16,
 );
 
-const richTextStyle = TextStyle(
-  color: Colors.green,
-  fontWeight: FontWeight.w600,
-);
+
 
 const displayWhiteTextStyle = TextStyle(
-  color: Colors.white,
   fontWeight: FontWeight.normal,
 );
+
+//dark mode states
+const searchBgColorDark=Colors.black;
+const searchBgColorWhite=Color(0xFFF1F5F8);
+
+var navIndicatorDark =  Colors.grey[750];
+var navIndicatorLight =  Colors.white;
+
+const displayCardLight = Color(0xFFcebc9c);
+const displayCardDark = Color(0xFFf5deb3);
+
+
 
 class MediaQuerySize {
   BuildContext context;
@@ -63,3 +71,12 @@ class MediaQuerySize {
     return MediaQuery.of(context).size.width;
   }
 }
+
+//page Routing Enums
+
+var pages={
+  0:FavoritesPage(),
+  1:HomePage(),
+  2:RegionalRecipeList(scrollIndex: 0,),
+};
+

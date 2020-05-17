@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oro_recipes/constants.dart';
+import 'package:provider/provider.dart';
+import '../state.dart';
 
-enum Language { English, Afaan_Oromo }
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -75,104 +76,78 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
+  _setMode(bool val,BuildContext c){
+    var _state = Provider.of<SettingsState>(c,listen: false);
+    _state.setNightMode(val);
+  }
+
+
   @override
   Widget build(BuildContext context) {
+    var state = Provider.of<SettingsState>(context);
     return SafeArea(
       child: Scaffold(
         key: _scaffoldKey,
-        backgroundColor: scaffold_background,
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              alignment: Alignment.centerLeft,
-              color: Colors.black,
-              child: Row(
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: Colors.black,
+          title: Text("Setting",style: displayTextWhiteBold,),),
+        body: Container(
+          child: ListView(
+            children: <Widget>[
+              SizedBox(height: 30,),
+              Container(
+                  child: SwitchListTile(
+                    activeColor: Colors.teal,
+                    value: state.nightMode,
+                    onChanged: (f) {
+                      _setMode(f,context);
+                    },
+                    title: Text("Night mode"),
+                  )),
+              ExpansionTile(
                 children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      alignment: Alignment.centerLeft,
-                      child: IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(
-                          Icons.arrow_back_ios,
-                          color: Colors.white,
-                        ),
-                      ),
+                  ListTile(
+                    title: const Text('English'),
+                    leading: Radio(
+                      value: Language.English,
+                      groupValue: _character,
+                      onChanged: (Language value) {
+                        setState(() {
+                          _character = value;
+                        });
+                      },
                     ),
                   ),
-                  Expanded(
-                      flex: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 30.0),
-                        child: Text(
-                          "Settings",
-                          style: displayWhiteTextStyle,
-                        ),
-                      ))
-                ],
-              ),
-            ),
-            Expanded(
-              child: ListView(
-                children: <Widget>[
-                  SizedBox(height: 30,),
-                  Container(
-                      child: SwitchListTile(
-                        activeColor: Colors.teal,
-                        onChanged: (f) {},
-                        value: false,
-                        title: Text("Night mode"),
-                      )),
-                  ExpansionTile(
-                    children: <Widget>[
-                      ListTile(
-                        title: const Text('English'),
-                        leading: Radio(
-                          value: Language.English,
-                          groupValue: _character,
-                          onChanged: (Language value) {
-                            setState(() {
-                              _character = value;
-                            });
-                          },
-                        ),
-                      ),
-                      ListTile(
-                        title: const Text('Afaan Oromo'),
-                        leading: Radio(
-                          value: Language.Afaan_Oromo,
-                          groupValue: _character,
-                          onChanged: (Language value) {
-                            setState(() {
-                              _character = value;
-                            });
-                          },
-                        ),
-                      ),
-                    ],
-                    title: Text("Language"),
-                  ),
-                  InkWell(
-                    onTap: _showPrivacyInfo,
-                    child: ListTile(
-                      title: Text("Privacy and Policy"),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: _sendFeedback,
-                    child:ListTile(
-                      title: Text("Support and Feedback"),
+                  ListTile(
+                    title: const Text('Afaan Oromo || This is not yet Supported'),
+                    leading: Radio(
+                      value: Language.Oromo,
+                      groupValue: _character,
+                      onChanged: (Language value) {
+//                        setState(() {
+//                          _character = value;
+//                        });
+                      },
                     ),
                   ),
                 ],
+                title: Text("Language"),
               ),
-            ),
-          ],
+              InkWell(
+                onTap: _showPrivacyInfo,
+                child: ListTile(
+                  title: Text("Privacy and Policy"),
+                ),
+              ),
+              InkWell(
+                onTap: _sendFeedback,
+                child:ListTile(
+                  title: Text("Support and Feedback"),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

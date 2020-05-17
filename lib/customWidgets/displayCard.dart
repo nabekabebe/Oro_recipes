@@ -41,19 +41,18 @@ class CustomCardBig extends StatelessWidget {
   final String name;
   final String ratingBar;
   final String region;
-
-  CustomCardBig({this.imgUrl, this.name, this.ratingBar,this.region});
+  final Color bgColor;
+  CustomCardBig({this.imgUrl, this.name, this.ratingBar,this.region,this.bgColor});
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.only(top: 50),
           alignment: Alignment.center,
           width: 180,
           height: 260,
           decoration: BoxDecoration(
-              color: Color(0xFFf5deb3),
+              color: bgColor,
               borderRadius: BorderRadius.all(Radius.circular(30)),
           boxShadow:[
               BoxShadow(
@@ -68,10 +67,12 @@ class CustomCardBig extends StatelessWidget {
                 boxShadow:[
                   BoxShadow(
                       blurRadius: 25,
-                      color: Color(0xFFff9f82),
+                      color: Color(0xFFb27f70),
+                      offset: Offset(2,4)
                   ),
                 ]),
             child: CircleAvatar(
+              backgroundColor: Colors.grey,
               backgroundImage: AssetImage(imgUrl),
               radius: 50,
             ),

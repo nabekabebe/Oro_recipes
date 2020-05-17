@@ -1,27 +1,3 @@
-class FavCollection{
-
-  static List<int> favorites = [];
-
-  favSet(int index){
-    favorites.insert(0,index);
-  }
-
-  List favGet(){
-    return favorites;
-  }
-
-  int itemGet(){
-    return favorites.length;
-  }
-
-  favRemove(int index){
-    favorites.removeAt(index);
-  }
-
-
-}
-
-
 const dummyDataJason = {
   0: {
     "name":"Chuko",

@@ -62,7 +62,6 @@ class CustomDrawer extends StatelessWidget {
       child: ConstrainedBox(
         constraints: const BoxConstraints.expand(width: 300),
         child: Material(
-          color: Color(0xFFede8e8),
           elevation: 0,
           child: Column(
             children: <Widget>[
@@ -102,7 +101,7 @@ class CustomDrawer extends StatelessWidget {
               Expanded(
                 flex: 2,
                   child: Container(
-                    padding: EdgeInsets.only(bottom: 20),
+                    padding: EdgeInsets.only(bottom: 30),
                       alignment: Alignment.bottomCenter,
                       child: Text("Version 1.0.0",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 10),))),
             ],

@@ -1,19 +1,18 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oro_recipes/customWidgets/displayCard.dart';
 import 'package:oro_recipes/customWidgets/searchBar.dart';
 import 'package:oro_recipes/pages/CategoryListPage.dart';
 import 'package:oro_recipes/pages/DetailsPage.dart';
 import 'package:oro_recipes/pages/Drawer.dart';
-import 'package:oro_recipes/pages/FavoritesPage.dart';
 import 'package:oro_recipes/constants.dart';
 import 'package:oro_recipes/data.dart';
+import 'package:oro_recipes/state.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class HomePage extends StatefulWidget {
-
-  final data=dummyDataJason;
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -29,12 +28,29 @@ class _HomePageState extends State<HomePage>{
   @override
   void initState() {
     super.initState();
+    _nightModeState();
     _pageController =
         new PageController(initialPage: 1, viewportFraction: 0.25);
     _pageController2 =
         new PageController(initialPage: 0, viewportFraction: 0.5);
+
   }
 
+  _nightModeState() async{
+    var _state = Provider.of<SettingsState>(context,listen: false);
+    bool mode = await getModePreference("nightMode");
+    _state.setNightMode(mode);
+  }
+
+  Future<bool> getModePreference(String mode) async{
+    SharedPreferences _prefsMode = await SharedPreferences.getInstance();
+    try{
+    bool nightMode = _prefsMode.getBool(mode);
+    return nightMode;
+    }catch(e){
+      return false;
+    }
+  }
 
   @override
   void dispose() {
@@ -46,53 +62,43 @@ class _HomePageState extends State<HomePage>{
 
   @override
   Widget build(BuildContext context){
+    var _state = Provider.of<SettingsState>(context);
     return SafeArea(
       child: Scaffold(
         key: _scaffoldKey,
         drawer: CustomDrawer(),
-        backgroundColor: scaffold_background,
         bottomNavigationBar: CurvedNavigationBar(
-          height: 56,
-          color: Color(0xFF0B8457),
-          backgroundColor: scaffold_background,
+          height: 54,
+          color: Colors.black,
+          backgroundColor: !_state.nightMode?navIndicatorLight:navIndicatorDark,
           buttonBackgroundColor: Colors.red,
-          animationDuration: Duration(milliseconds: 150),
+          animationDuration: Duration(milliseconds: 100),
+          index: 1,
+          onTap: (index){
+            Navigator.push(context,MaterialPageRoute(
+                builder: (BuildContext context){
+                  return pages[index];
+                }
+            ));
+            },
           items: <Widget>[
-            GestureDetector(
-              onTap: (){
-                Navigator.push(context,MaterialPageRoute(
-                    builder: (BuildContext context){
-                      return RegionalRecipeList();
-                    }
-                ));
-              },
-              child: Icon(
-                Icons.category,
-                color: Colors.white,
-                size: 26,
-              ),
+            Icon(
+              Icons.favorite,
+              color: Colors.white,
+              size: 26,
             ),
             Icon(
               Icons.home,
               color: Colors.white,
               size: 26,
             ),
-            GestureDetector(
-              onTap: (){
-                Navigator.push(context,MaterialPageRoute(
-                    builder: (BuildContext context){
-                      return FavoritesPage();
-                    }
-                ));
-              },
-              child: Icon(
-                Icons.favorite,
-                color: Colors.white,
-                size: 26,
-              ),
+            Icon(
+              Icons.category,
+              color: Colors.white,
+              size: 26,
             ),
           ],
-          index: 1,
+          animationCurve: Curves.easeInCirc,
         ),
         body: Container(
           child: Column(
@@ -129,11 +135,14 @@ class _HomePageState extends State<HomePage>{
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          CustomSearchBar(
-                            width: 260,
-                            height: 60,
-                            bgColor: Color(0xFFefefef),
-                            hasBorder: false,
+                          Consumer<SettingsState>(
+                            builder: (context,data,_)=>
+                            CustomSearchBar(
+                              width: 260,
+                              height: 60,
+                              bgColor: data.nightMode?searchBgColorDark:searchBgColorWhite,
+                              hasBorder: false,
+                            ),
                           ),
                           Container(
                             padding: EdgeInsets.only(left: 20,top: 15,right: 35,bottom: 15),
@@ -144,8 +153,12 @@ class _HomePageState extends State<HomePage>{
                                 topLeft: Radius.circular(20),
                               ),
                             ),
-                            child: Text("Go",style:displayTextWhiteBold,),
-                          ),
+                            child: GestureDetector(
+                                  onTap: (){
+
+                                  },
+                                  child: Text("Go",style:displayTextWhiteBold,)),
+                            ),
                         ],
                       ),
                     ),
@@ -203,11 +216,12 @@ class _HomePageState extends State<HomePage>{
                               onTap: (){
                                 Navigator.push(context,MaterialPageRoute(
                                     builder: (BuildContext context){
-                                      return DetailPage(itemIndex: index,);
+                                      return DetailPage(itemIndex: index,offline: false,);
                                     }
                                 ));
                               },
                               child: CustomCardBig(
+                                bgColor: _state.nightMode?displayCardLight:displayCardDark,
                                 ratingBar: dummyDataJason[index]["Rating"],
                                 imgUrl: dummyDataJason[index]["image"],
                                 name: dummyDataJason[index]["name"],
