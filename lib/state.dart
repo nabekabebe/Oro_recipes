@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 
+class MySharedPreference{
+
+}
 
 enum Language{
   English,Oromo
@@ -12,15 +15,13 @@ class SettingsState with ChangeNotifier{
   bool nightMode=false;
   Language language=Language.English;
 
-  Future<bool> setModePrefernce(bool mode) async{
-    SharedPreferences _prefsMode = await SharedPreferences.getInstance();
-    _prefsMode.clear();
-    _prefsMode.setBool("nightMode", mode).then((value) =>  notifyListeners());
-  }
 
-  setNightMode(bool val) async{
+  setNightMode(bool val){
     nightMode=val;
-    await setNightMode(val);
+    notifyListeners();
+  }
+  setLanguage(Language lan){
+    language=lan;
     notifyListeners();
   }
 

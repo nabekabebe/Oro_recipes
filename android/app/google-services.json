@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "960119553343",
+    "firebase_url": "https://oromo-recipe.firebaseio.com",
+    "project_id": "oromo-recipe",
+    "storage_bucket": "oromo-recipe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:960119553343:android:9364161f00b6e00106678a",
+        "android_client_info": {
+          "package_name": "nabek.oro_recipes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "960119553343-3ejfa3q21lpqrh6jpb5s9buu8s1dkd3c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuMNHo_bG7onJRowgpvekKs7AMpKVW4bU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "960119553343-3ejfa3q21lpqrh6jpb5s9buu8s1dkd3c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

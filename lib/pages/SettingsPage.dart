@@ -76,10 +76,10 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  _setMode(bool val,BuildContext c){
-    var _state = Provider.of<SettingsState>(c,listen: false);
-    _state.setNightMode(val);
-  }
+//  _setMode(bool val,BuildContext c){
+//    var _state = Provider.of<SettingsState>(c,listen: false);
+//    _state.setNightMode(val);
+//  }
 
 
   @override
@@ -101,7 +101,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     activeColor: Colors.teal,
                     value: state.nightMode,
                     onChanged: (f) {
-                      _setMode(f,context);
+                      state.setNightMode(f);
                     },
                     title: Text("Night mode"),
                   )),

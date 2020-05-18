@@ -183,7 +183,7 @@ const dummyDataJason = {
     ],
   },
   4: {
-    "name":"Chuko",
+    "name":"qamashaa",
     "Region":"Arsi",
     "Rating":"4",
     "Description":"Messages on this channel be running or you need to adjust the buffer size if of the channel.",
@@ -234,7 +234,7 @@ const dummyDataJason = {
     ],
   },
   5: {
-    "name":"Ambasha",
+    "name":"buna qalaa",
     "Region":"Harar",
     "Rating":"3.5",
     "Description":"The goal of a JSON generator is to create sample that appears real enough to be useful.",
@@ -276,7 +276,7 @@ const dummyDataJason = {
     ],
   },
   6: {
-    "name":"Foon",
+    "name":"qiixxa marqa",
     "Region":"Wallaga",
     "Rating":"5",
     "Description":"perhaps, the service is live and returning to send real data to anyone who isn’t authorized to receive it.",
@@ -348,7 +348,7 @@ const dummyDataJason = {
     ],
   },
   7: {
-    "name":"Lukkuu",
+    "name":"marqaa",
     "Region":"Borana",
     "Rating":"2",
     "Description":"Saving manual work is a great reason to You may be designing an API and not have live data yet.",
@@ -431,7 +431,7 @@ const dummyDataJason = {
     ],
   },
   8: {
-    "name":"Foon",
+    "name":"cuumboo",
     "Region":"Wallaga",
     "Rating":"5",
     "Description":"perhaps, the service  want to send real data to anyone who isn’t authorized to receive it.",
@@ -512,7 +512,7 @@ const dummyDataJason = {
     ],
   },
   9: {
-    "name":"Lukkuu",
+    "name":"akaayii",
     "Region":"Borana",
     "Rating":"2",
     "Description":"Saving manual work is the first place? You may be designing an API and not have live data yet.",
@@ -594,7 +594,7 @@ const dummyDataJason = {
     ],
   },
   10: {
-    "name":"Chuko",
+    "name":"daabboo",
     "Region":"Arsi",
     "Rating":"4",
     "Description":"Messages on this channel be running or you need to adjust the buffer size if of the channel.",
@@ -642,7 +642,7 @@ const dummyDataJason = {
     ],
   },
   11: {
-    "name":"Ambasha",
+    "name":"buddeena",
     "Region":"Harar",
     "Rating":"3.5",
     "Description":"The goal of a JSON generator is to create sample that appears real enough to be useful.",
@@ -694,7 +694,7 @@ const dummyDataJason = {
     ],
   },
   12: {
-    "name":"Foon",
+    "name":"caccabsaa",
     "Region":"Wallaga",
     "Rating":"5",
     "Description":"perhaps, the service is live and returning to send real data to anyone who isn’t authorized to receive it.",
